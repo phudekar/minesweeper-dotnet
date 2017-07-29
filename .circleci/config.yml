@@ -1,0 +1,23 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: microsoft/dotnet
+
+    working_directory: ~/repo
+
+    environment:
+      TERM: dumb
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies
+
+      - run: dotnet restore
+
+      # run tests!
+      - run: dotnet test Tests/*.csproj
